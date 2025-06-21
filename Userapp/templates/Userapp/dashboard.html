@@ -1,0 +1,46 @@
+{% extends 'Userapp/base.html' %}
+
+{% block title %}Dashboard - Auth System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-black text-white rounded-top-4">
+            <h3 class="mb-0">Welcome, {{ user.first_name|default:user.username }}</h3>
+            <p class="mb-0 small">You are successfully logged in.</p>
+        </div>
+        <div class="card-body">
+            <!-- Begin 3 rows with 2 items each -->
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <strong>Username:</strong> {{ user.username }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Last Name:</strong> {{ user.last_name|default:"Not provided" }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <strong>Email:</strong> {{ user.email }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <strong>First Name:</strong> {{ user.first_name|default:"Not provided" }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Last Login:</strong> {{ user.last_login|date:"F d, Y H:i" }}
+                </div>
+            </div>
+
+            <!-- Centered Logout Button -->
+            <div class="text-center">
+                <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-lg px-5">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
