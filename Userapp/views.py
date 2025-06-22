@@ -57,7 +57,6 @@ def dashboard_view(request):
 def logout_view(request):
     if request.user.is_authenticated:
         username = request.user.username
-        # Clear all session data
         request.session.flush()
         logout(request)
         messages.success(request, f'Goodbye {username}! You have been logged out successfully.')
