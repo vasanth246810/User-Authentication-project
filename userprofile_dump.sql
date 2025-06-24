@@ -293,7 +293,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('1f0d6jch3ozi39tv027bw0h9gvol5q1g','.eJyrViotTi2Kz0xRsjLRAbPzEnNTlayUikuLUoszlHSUijPT80oL4ksyc1OLSxJzC4ByRgZGproGZrpGhgqG5lYgZKgQGuKsbQAEShBT4ksqC0DG5KWWx4P4SrUAFz8hFA:1uT1qt:ESlq-algUXmiYauoexEdc_N1oZKcPHZss_ZkHcIKuIo','2025-07-05 17:18:03.782309'),('4g7t3zwfemt1z1sfonwab6ozy417crr8','e30:1uT1rR:UGNI6QkN6_PK23tksfgc0Y-LwzxXLPlMD3YT57GEKSA','2025-07-05 17:18:37.867413'),('i19lig2tzbsf8lhbl3xs8htu6r907o63','.eJwljEsKgDAMBe-SrR9itH5yDvelYJAuWoqtiIh3t-qs3vBgLtijbNouwFR-2xsnwBAPyUAJ0a5-DzpZJzEZF_JHSKrCvqJmbjqmkduhnlpSaioQGRH-kk5neFNeDv063A-IYyHO:1uSzDL:m1V1jB2H6VKXR-4K14urBLMTZNfJfSuolGFaZrOSB8U','2025-07-05 14:29:03.608731'),('lnnd2f33v53xhlkh3jacoetc5jmdo4as','.eJx9T81uwyAMfpWKcxsBg0By7H3PgAw4CWvjRIVomqa9e0NXTeplN3-_tr_ZlvHmUmS9PT5mghlZzyYgYkeW00jb6kqaMReY112RXOoTb09SHITpte45Z79RV77WmiX8dBXvtIOtTO5vB7OvnIdwQapC_AAalyYsVG7JN9XSPNXcvC8Rr-en96VggjzVm1TQSokuCPAwoLU2qlbZzutOyCiF4GAEYhwCes-t0WjfTMtjZ9TAd7yXXpcx0b-Psp87P4VfNQ:1uT2Qo:orGjoq9E2xndW-KkK98V46nvGgVLHSYjiQP5B0I_tR4','2025-07-05 17:55:10.209168');
+INSERT INTO `django_session` VALUES ('1f0d6jch3ozi39tv027bw0h9gvol5q1g','.eJyrViotTi2Kz0xRsjLRAbPzEnNTlayUikuLUoszlHSUijPT80oL4ksyc1OLSxJzC4ByRgZGproGZrpGhgqG5lYgZKgQGuKsbQAEShBT4ksqC0DG5KWWx4P4SrUAFz8hFA:1uT1qt:ESlq-algUXmiYauoexEdc_N1oZKcPHZss_ZkHcIKuIo','2025-07-05 17:18:03.782309'),('4g7t3zwfemt1z1sfonwab6ozy417crr8','e30:1uT1rR:UGNI6QkN6_PK23tksfgc0Y-LwzxXLPlMD3YT57GEKSA','2025-07-05 17:18:37.867413'),('i19lig2tzbsf8lhbl3xs8htu6r907o63','.eJwljEsKgDAMBe-SrR9itH5yDvelYJAuWoqtiIh3t-qs3vBgLtijbNouwFR-2xsnwBAPyUAJ0a5-DzpZJzEZF_JHSKrCvqJmbjqmkduhnlpSaioQGRH-kk5neFNeDv063A-IYyHO:1uSzDL:m1V1jB2H6VKXR-4K14urBLMTZNfJfSuolGFaZrOSB8U','2025-07-05 14:29:03.608731'),('iu2qqqwa6a5vu5il89tse95siqhjheaz','eyJ1c2VyX2lkIjozLCJ1c2VybmFtZSI6InByYXNzIiwic2lnbnVwX3RpbWVzdGFtcCI6IjIwMjUtMDYtMjQgMTc6MjM6MDcifQ:1uU7Rd:SO6btOKI2fuyaKk3bpX0T8jLYPyh7kW0nlwR3R8EFes','2025-07-08 17:28:29.171133');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,9 +311,10 @@ CREATE TABLE `userapp_userprofile` (
   `last_name` varchar(150) NOT NULL,
   `email` varchar(254) NOT NULL,
   `created_on` datetime(6) NOT NULL,
+  `password` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,13 +323,8 @@ CREATE TABLE `userapp_userprofile` (
 
 LOCK TABLES `userapp_userprofile` WRITE;
 /*!40000 ALTER TABLE `userapp_userprofile` DISABLE KEYS */;
-INSERT INTO `userapp_userprofile` VALUES (1,'rachu','hello','fwf','','2025-06-21 23:29:09.817793'),(2,'hann','hann','hannn','','2025-06-21 23:29:09.817793');
 /*!40000 ALTER TABLE `userapp_userprofile` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'users'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -339,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-21 23:41:47
+-- Dump completed on 2025-06-24 23:52:15
