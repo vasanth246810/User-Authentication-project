@@ -42,19 +42,16 @@ A Django-based user authentication system with custom user profile management, s
 
 4. **Configure your MySQL database in `UserProject/settings.py`:**
    ```python
- DATABASES = {
-        'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': DATABASE_NAME,
-                'USER': DATABASE_USER,
-                'PASSWORD': DATABASE_PASSWORD,
-                'HOST': DATABASE_HOST,
-                'PORT': DATABASE_POST,
-                'OPTIONS':{
-                        'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
-                }
-        }
-}
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'NAME': '',
+           'USER': '',
+           'PASSWORD': '',
+           'HOST': 'localhost',
+           'PORT': '3306',
+       }
+   }
    ```
 
 5. **Apply migrations:**
