@@ -6,16 +6,16 @@
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-4">
         <div class="card-header bg-black text-white rounded-top-4">
-            <h3 class="mb-0">Welcome, {{ user.first_name|default:user.username }}</h3>
+            <h3 class="mb-0">Welcome, {{ user.first_name|default:"user.user" }}</h3>
             <p class="mb-0 small">You are successfully logged in.</p>
         </div>
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col-md-6">
-                    <strong>Username:</strong> {{ user.username }}
+                    <strong>Username:</strong> {{ user.user }}
                 </div>
                 <div class="col-md-6">
-                    <strong>Last Name:</strong> {{ user.last_name|default:"Not provided" }}
+                    <strong>Last Name:</strong> {{ user.last_name|default:" " }}
                 </div>
             </div>
             <div class="row mb-2">
@@ -23,15 +23,12 @@
                     <strong>Email:</strong> {{ user.email }}
                 </div>
                 <div class="col-md-6">
-                    <strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}
+                    <strong>Date Joined:</strong> {{ user.created_on|date:"F d, Y" }}
                 </div>
             </div>
             <div class="row mb-4">
                 <div class="col-md-6">
-                    <strong>First Name:</strong> {{ user.first_name|default:"Not provided" }}
-                </div>
-                <div class="col-md-6">
-                    <strong>Last Login:</strong> {{ user.last_login|date:"F d, Y H:i" }}
+                    <strong>First Name:</strong> {{ user.first_name|default:" " }}
                 </div>
             </div>
 

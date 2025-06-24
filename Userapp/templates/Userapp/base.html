@@ -51,16 +51,16 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            document.querySelectorAll('.alert-dismissible').forEach(function(alertElem) {
-                var bsAlert = bootstrap.Alert.getOrCreateInstance(alertElem);
-                bsAlert.close();
-            });
-        }, 2000);
-    });
-    </script>
+   <script>
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert-dismissible');
+        alerts.forEach(function (alert) {
+            alert.remove();
+        });
+    }, 2000);
+});
+</script>
+
 </body>
 </html>

@@ -1,63 +1,78 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
-from django.shortcuts import render, redirect
 from .forms import SignupForm, SigninForm
 from .models import UserProfile
+import hashlib
 
 def signup_view(request):
-    if request.session.get('user_id'):
-        return redirect('dashboard')
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password1'])
-            user.save()
-            UserProfile.objects.create(user=user.username,first_name=form.cleaned_data['first_name'],last_name=form.cleaned_data['last_name'],email=form.cleaned_data['email'])           
-            request.session['user_id'] = user.id
-            request.session['username'] = user.username
-            request.session['signup_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
-            request.session['user_type'] = 'new_user'
+    try:
+        if request.user.is_authenticated:
             return redirect('dashboard')
-    else:
+        if request.method == 'POST':
+            form = SignupForm(request.POST)
+            if form.is_valid():
+                UserForm = form.save(commit=False)
+                UserForm.password = Hashpassword(form.cleaned_data['password'])
+                print("UserForm.password:", UserForm.password)
+                UserForm.save()
+                request.session['user_id'] = UserForm.id
+                request.session['username'] = UserForm.user
+                request.session['signup_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+                return redirect('dashboard')
+            else:
+                form = SignupForm()
+    except Exception as e:
+        messages.error(request, f"Signup failed: {str(e)}")
         form = SignupForm()
     return render(request, 'Userapp/signup.html', {'form': form})
 
-
-
 def signin_view(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-    if request.method == 'POST':
-        form = SigninForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)
-                request.session['login_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M")
-                messages.success(request, f'Welcome back, {user.first_name or user.username}!')
-                return redirect('dashboard')
-            else:
-                messages.error(request, 'Invalid username or password.')
+    try:
+        if request.session.get('user_id'):
+            return redirect('dashboard')
+        if request.method == 'POST':
+            form = SigninForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user = UserProfile.objects.filter(user=username).first()
+                if user:
+                    if user.password == Hashpassword(password):
+                        request.session['login_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M")
+                        request.session['username'] = username
+                        messages.success(request, f'Welcome back, {user.user}!')
+                        return redirect('dashboard')
+                    else:
+                        messages.error(request, 'Invalid username or password.')
         else:
-            messages.error(request, 'Please correct the errors below.')
-    else:
+            form = SigninForm()
+    except Exception as e:
+        messages.error(request, f"Sign in failed: {str(e)}")
         form = SigninForm()
     return render(request, 'Userapp/signin.html', {'form': form})
 
-@login_required
 def dashboard_view(request):
-    return render(request, 'Userapp/dashboard.html')
+    try:
+        UserInfo = UserProfile.objects.filter(user=request.session.get('username')).first()
+        return render(request, 'Userapp/dashboard.html', {'user': UserInfo})
+    except Exception as e:
+        messages.error(request, f"Dashboard error: {str(e)}")
+    return redirect('signin')
 
 def logout_view(request):
-    if request.user.is_authenticated:
-        username = request.user.username
-        request.session.flush()
-        logout(request)
-        messages.success(request, f'Goodbye {username}! You have been logged out successfully.')
+    try:
+        if request.session.get('user_id'):
+            username = request.session['username']
+            request.session.flush()
+            messages.success(request, f'Goodbye {username}! You have been logged out successfully.')
+    except Exception as e:
+        messages.error(request, f"Logout failed: {str(e)}")
     return redirect('signin')
+
+def Hashpassword(password):
+    s = '5gz'
+    pwd_salt = password + s
+    hashed = hashlib.sha256(pwd_salt.encode()).hexdigest()
+    return hashed
